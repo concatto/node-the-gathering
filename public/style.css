@@ -1,0 +1,49 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+}
+
+.player-container {
+    width: 100%;
+    height: 50%;
+    box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
+    display: table;
+    font-family: Arial;
+}
+
+.player-container > span {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.life-control-container {
+    width: 15%;
+    background-color: #AAFFFF;
+}
+
+.life-control:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.life-control {
+    background-color: #5599FF;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 999px;
+}
+
+.life-amount {
+    background-color: #AABBFF;
+}
