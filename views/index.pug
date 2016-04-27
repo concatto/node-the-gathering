@@ -1,0 +1,59 @@
+html
+    head
+        title Node: the Gathering
+        meta(charset='utf-8')
+        link(rel='stylesheet', href='style.css')
+        script(src='https://cdn.socket.io/socket.io-1.4.5.js')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
+        script(type='text/javascript').
+            var socket = io();
+
+            socket.on("lifeChange", function(data) {
+                var counters = $(".life-amount");
+                for (var i = 0; i < counters.length; i++) {
+                    $(counters[i]).text(data.values[i]);
+                }
+            });
+
+
+
+            function adjustFont(object, relativeObject, coefficient) {
+                var width = relativeObject.width();
+                var height = relativeObject.height();
+
+                var relative = width < height ? width : height;
+                object.css("font-size", Math.round(relative * coefficient) + "px");
+            }
+
+            function adjustSizes() {
+                var controlWidth = $(".life-control-container").width() * 0.7;
+                $(".life-control").css("height", controlWidth + "px");
+                $(".life-control").css("width", controlWidth + "px");
+
+                adjustFont($(".life-amount"), $(".life-amount"), 0.5);
+                adjustFont($(".life-control"), $(".life-control-container"), 0.4);
+            }
+
+            $(function() {
+                adjustSizes();
+
+                $(window).on("resize", adjustSizes);
+                $("div.decrease-life").on("click", function() {
+                    socket.emit("action", {command: "decrease", player: $(this).parents(".player-container").data("player")});
+                });
+                $("div.increase-life").on("click", function() {
+                    socket.emit("action", {command: "increase", player: $(this).parents(".player-container").data("player")});
+                });
+            });
+
+    body
+        mixin life(player)
+          div.player-container(data-player=player)
+            span.life-control-container
+              div.decrease-life.life-control -
+            span.life-amount 20
+            span.life-control-container
+              div.increase-life.life-control +
+
+        +life('0')
+        +life('1')

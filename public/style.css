@@ -42,6 +42,7 @@ body, html {
     display: inline-block;
     vertical-align: middle;
     border-radius: 999px;
+    cursor: pointer;
 }
 
 .life-amount {
